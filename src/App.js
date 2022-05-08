@@ -2,7 +2,7 @@ function App () {
     // JSX语法
   return (
     <div>
-      123
+      hell yeah~
     </div>
   );
 }
