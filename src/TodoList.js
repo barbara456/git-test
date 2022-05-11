@@ -1,4 +1,5 @@
 import { Component, Fragment } from "react";
+import './style.css'
 
 // 一个类 就是一个组件
 class TodoList extends Component {
@@ -18,11 +19,17 @@ class TodoList extends Component {
         return (
             <Fragment>
                     <div>
+                        {/* html中有一个 lable 标签, 作用是扩大点击区域 */}
+                        {/* 我们希望点击 label 时, 鼠标能聚焦到输入框上, 通过在 input 上加 id 和 label 上加 htmlfor 来实现 */}
+                        <label htmlFor="insetArea">输入内容</label>
                         <input
-                        // 在 JSX 的语法中使用 JS 表达式, 语法要求: 用大括号把 JS 表达式括起来
-                        value={this.state.inputValue}
-                        // React事件绑定语法需要把 on 后面的字符大写: onChange
-                        // 同时 bind绑定 this 指向该组件
+                            id="insetArea"
+                            // 添加样式时, 用 className 代替 class, 不然react 会报警告, 觉得样式 class 和组件类 class 重名
+                            className ='input'
+                            // 在 JSX 的语法中使用 JS 表达式, 语法要求: 用大括号把 JS 表达式括起来
+                            value={this.state.inputValue}
+                            // React事件绑定语法需要把 on 后面的字符大写: onChange
+                            // 同时 bind绑定 this 指向该组件
                             onChange={this.handleInputChange.bind(this)}
                         />
                         <button
@@ -36,7 +43,11 @@ class TodoList extends Component {
                                 <li
                                     key={index}
                                     onClick = {this.handleItemDelete.bind(this, index)}
-                                >{item}</li>
+                                    // 希望 li 标签内支持以 html 语言展示item
+                                    dangerouslySetInnerHTML = {{__html: item}}
+                                >
+                                    {/* {item} */}
+                                </li>
                             )
                             })
                         }
