@@ -1,5 +1,7 @@
 import { Component, Fragment } from "react";
-import './style.css'
+import './style.css';
+import TodoItem from "./TodoItem";
+
 
 // 一个类 就是一个组件
 class TodoList extends Component {
@@ -18,6 +20,7 @@ class TodoList extends Component {
     render () {
         return (
             <Fragment>
+                    {/* 输入框和按钮 */}
                     <div>
                         {/* html中有一个 lable 标签, 作用是扩大点击区域 */}
                         {/* 我们希望点击 label 时, 鼠标能聚焦到输入框上, 通过在 input 上加 id 和 label 上加 htmlfor 来实现 */}
@@ -36,22 +39,26 @@ class TodoList extends Component {
                             onClick={this.handleBtnClick.bind(this)}
                         >提交</button>
                     </div>
+                    {/* 列表项 */}
                     <ul>
                         {
                         this.state.list.map((item, index) => {
                             return (
-                                <li
+                                // 使用子组件: TodoItem 把 list 中的每一项 item 传给子组件, 子组件给 item 起名叫 content, 用的时候就拿 content 用
+                                <TodoItem
+                                    content={item}
                                     key={index}
-                                    onClick = {this.handleItemDelete.bind(this, index)}
-                                    // 希望 li 标签内支持以 html 语言展示item
-                                    dangerouslySetInnerHTML = {{__html: item}}
-                                >
-                                    {/* {item} */}
-                                </li>
+                                    index={index}
+                                    // 我们希望调用父组件的handleItemDelete方法, 这个方法是在父组件的作用域起作用的, 所以我们需要把作用域 bind 在父组件的作用域上
+                                    handleItemDelete={this.handleItemDelete.bind(this)}
+                                />
                             )
                             })
                         }
                     </ul>
+                    <div>父向子组件传值: 父组件把自己的数据以属性的方式写在子组件上, 子组件在子组件内部通过this.props.属性名 来使用传过来的值</div>
+                    <br />
+                    <div>子调用父组件的方法: 父将自己的方法 bind 在自己的作用域上, 通过属性的形式传给子, 子通过this.props.###来调用父组件传来的方法</div>
             </Fragment>
         )
     }
