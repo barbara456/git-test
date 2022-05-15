@@ -1,28 +1,35 @@
 import { Component } from "react";
-
+import propTypes from 'prop-types'
 class TodoItem extends Component {
     constructor(props) {
         super(props);
-        // 在 constructor 里绑定deleteItem的 this 指向为 TodoItem 组件
-        // 在 constructor 里绑定有利于后续性能优化
         this.deleteItem = this.deleteItem.bind(this);
     }
 
     render () {
-        // 解构赋值取到 content
-        const {content} = this.props;
+        const {content, test} = this.props;
         return <div
                     onClick={this.deleteItem}
                 >
-                    {content}
+                    {test} - {content}
                 </div>
     }
 
     deleteItem () {
-        // 解构赋值优化
         const { handleItemDelete, index } = this.props;
         handleItemDelete(index);
     }
+}
+// PropTypes 数据类型的强校验
+TodoItem.propTypes = {
+    test: propTypes.string.isRequired,
+    content: propTypes.string,
+    deleteItem: propTypes.func,
+    index: propTypes.number
+}
+// 借助 defaultProps设置默认值
+TodoItem.defaultProps = {
+    test: 'hello world'
 }
 
 export default TodoItem;
