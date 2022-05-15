@@ -8,7 +8,7 @@ class TodoItem extends Component {
 
     render () {
         const {content, test} = this.props;
-        return <div
+        return <div 
                     onClick={this.deleteItem}
                 >
                     {test} - {content}
